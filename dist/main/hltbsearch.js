@@ -16,33 +16,40 @@ const UserAgent = require('user-agents');
 class HltbSearch {
     constructor() {
         this.payload = {
-            "searchType": "games",
-            "searchTerms": [],
-            "searchPage": 1,
-            "size": 20,
-            "searchOptions": {
-                "games": {
-                    "userId": 0,
-                    "platform": "",
-                    "sortCategory": "popular",
-                    "rangeCategory": "main",
-                    "rangeTime": {
-                        "min": 0,
-                        "max": 0
+            'searchType': 'games',
+            'searchTerms': [],
+            'searchPage': 1,
+            'size': 20,
+            'searchOptions': {
+                'games': {
+                    'userId': 0,
+                    'platform': '',
+                    'sortCategory': 'popular',
+                    'rangeCategory': 'main',
+                    'rangeTime': {
+                        'min': null,
+                        'max': null
                     },
-                    "gameplay": {
-                        "perspective": "",
-                        "flow": "",
-                        "genre": ""
+                    'gameplay': {
+                        'perspective': '',
+                        'flow': '',
+                        'genre': ''
                     },
-                    "modifier": ""
+                    'rangeYear': {
+                        'min': '',
+                        'max': ''
+                    },
+                    'modifier': ''
                 },
-                "users": {
-                    "sortCategory": "postcount"
+                'users': {
+                    'sortCategory': 'postcount'
                 },
-                "filter": "",
-                "sort": 0,
-                "randomizer": 0
+                'lists': {
+                    'sortCategory': 'follows'
+                },
+                'filter': '',
+                'sort': 0,
+                'randomizer': 0
             }
         };
     }
@@ -52,9 +59,20 @@ class HltbSearch {
                 let result = yield axios.get(`${HltbSearch.DETAIL_URL}${gameId}`, {
                     followRedirect: false,
                     headers: {
-                        'User-Agent': new UserAgent().toString(),
+                        'pragma': 'no-cache',
+                        'cache-control': 'no-cache',
+                        'sec-ch-ua': '"Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"',
+                        'sec-ch-ua-platform': '"macOS"',
+                        'sec-ch-ua-mobile': '?0',
+                        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+                        'content-type': 'application/json',
+                        'accept': '*/*',
                         'origin': 'https://howlongtobeat.com',
-                        'referer': 'https://howlongtobeat.com'
+                        'sec-fetch-site': 'same-origin',
+                        'sec-fetch-mode': 'cors',
+                        'sec-fetch-dest': 'empty',
+                        'referer': 'https://howlongtobeat.com/',
+                        'accept-language': 'es-ES,es;q=0.9,en;q=0.8,pt;q=0.7,gl;q=0.6'
                     },
                     timeout: 20000,
                     signal,
@@ -81,9 +99,20 @@ class HltbSearch {
             try {
                 let result = yield axios.post(HltbSearch.SEARCH_URL, search, {
                     headers: {
+                        'pragma': 'no-cache',
+                        'cache-control': 'no-cache',
+                        'sec-ch-ua': '"Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"',
+                        'sec-ch-ua-platform': '"macOS"',
+                        'sec-ch-ua-mobile': '?0',
+                        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
                         'content-type': 'application/json',
-                        'origin': 'https://howlongtobeat.com/',
-                        'referer': 'https://howlongtobeat.com/'
+                        'accept': '*/*',
+                        'origin': 'https://howlongtobeat.com',
+                        'sec-fetch-site': 'same-origin',
+                        'sec-fetch-mode': 'cors',
+                        'sec-fetch-dest': 'empty',
+                        'referer': 'https://howlongtobeat.com/',
+                        'accept-language': 'es-ES,es;q=0.9,en;q=0.8,pt;q=0.7,gl;q=0.6'
                     },
                     timeout: 20000,
                     signal,
